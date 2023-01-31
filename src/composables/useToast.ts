@@ -1,4 +1,4 @@
-import { ref, computed, watch, nextTick } from "vue";
+import { ref, computed } from "vue";
 import { MessageType, ToastPayload } from "./../constants/injectionKeys";
 
 let toasts = ref<ToastPayload[]>([]);
@@ -28,16 +28,13 @@ export function useToast() {
 			color: color,
 			time: now,
 		});
-		console.log(allToasts.value, "boom");
 	};
 
 	const destroyToast = (toast: ToastPayload): Boolean => {
 		let status = false;
-
-		const item = toasts.value.indexOf(toast);
+		// const item = toasts.value.indexOf(toast);
 
 		setTimeout(() => {
-			// nextTick();
 			// toasts.value.slice(toasts.value.indexOf(toast), 1);
 			// toasts.value.shift();
 			toasts.value = toasts.value.filter((item) => item.time !== toast.time);
@@ -50,11 +47,6 @@ export function useToast() {
 
 		return status;
 	};
-
-	watch(
-		() => allToasts.value,
-		(val) => console.log(val, "yohhoooo")
-	);
 
 	return {
 		createToast,
